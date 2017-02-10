@@ -48,6 +48,20 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\BusinessProcess\BusinessProcess.csproj">
+      <Project>{2d92cd69-9d7b-4b02-ac0c-5d9c9b82f5a2}</Project>
+      <Name>BusinessProcess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\Entity\Entity.csproj">
+      <Project>{c79c10d3-3cf6-4e5d-9926-e9209fa7c54c}</Project>
+      <Name>Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\Interfaces\Interfaces.csproj">
+      <Project>{a1304dd1-08c4-4d00-9fd3-b45a0564bbf3}</Project>
+      <Name>Interfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
