@@ -3,7 +3,7 @@ using System.Collections;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 using GroceryCheckOut.Entity.Enums;
-using Interfaces;
+
 
 namespace GroceryCheckOut.Entity
 {

@@ -43,16 +43,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\PromotionTypeEnum.cs" />
+    <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="ProductPurchase.cs" />
     <Compile Include="Promotion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Interfaces\Interfaces.csproj">
-      <Project>{a1304dd1-08c4-4d00-9fd3-b45a0564bbf3}</Project>
-      <Name>Interfaces</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

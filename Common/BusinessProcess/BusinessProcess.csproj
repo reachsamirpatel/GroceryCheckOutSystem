@@ -57,10 +57,6 @@
       <Project>{c79c10d3-3cf6-4e5d-9926-e9209fa7c54c}</Project>
       <Name>Entity</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Interfaces\Interfaces.csproj">
-      <Project>{a1304dd1-08c4-4d00-9fd3-b45a0564bbf3}</Project>
-      <Name>Interfaces</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Logging\Logging.csproj">
       <Project>{bc775ec4-f665-44a5-84c4-d6e24d70b831}</Project>
       <Name>Logging</Name>
