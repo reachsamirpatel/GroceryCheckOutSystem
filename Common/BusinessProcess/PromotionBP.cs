@@ -59,6 +59,17 @@ namespace BusinessProcess
             return null;
         }
 
+        private bool CheckPromotionExpiry(Promotion promotion)
+        {
+            if (promotion.StartDate == null || promotion.EndDate == null)
+                return false;
+            if (DateTime.Now.Ticks >= promotion.StartDate.Value.Ticks && DateTime.Now.Ticks < promotion.EndDate.Value.Ticks)
+            {
+                return false;
+            }
+            return true;
+        }
+
         private void ApplyOnSalePromotion(Promotion promotion, List<ProductPurchase> purchaseItems)
         {
             foreach (ProductPurchase item in purchaseItems.Where(pi => pi.Product.Name == promotion.Name))
@@ -95,7 +106,7 @@ namespace BusinessProcess
         private void ApplyAdditionalProductPromotion(Promotion promotion, List<ProductPurchase> purchaseItems)
         {
             IEnumerable<ProductPurchase> applicableItems =
-                purchaseItems.Where(pi => pi.Product.Name == promotion.Name).ToList();
+            purchaseItems.Where(pi => pi.Product.Name == promotion.Name).ToList();
 
             for (int i = 0; i < applicableItems.Count(); i += promotion.NumberOfItemsRequired + 1)
             {
@@ -115,6 +126,8 @@ namespace BusinessProcess
         {
             foreach (Promotion promotion in promotions)
             {
+                if (CheckPromotionExpiry(promotion))
+                    continue;
                 ApplyPromotion(promotion, purchasedItemList);
             }
             return purchasedItemList;
