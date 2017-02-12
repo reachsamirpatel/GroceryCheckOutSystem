@@ -26,44 +26,42 @@ namespace BusinessProcess
         {
             Initialize();
         }
-        public Promotion CreatePromotion(Product product, int ipromotion, double reductionRate, int noOfItemsRequired)
+        public Promotion CreatePromotion(Product product, PromotionTypeEnum ipromotion, double reductionRate, int noOfItemsRequired)
         {
-            int onSale = (int)PromotionTypeEnum.OnSale;
-            int group = (int)PromotionTypeEnum.Group;
-            int additional = (int)PromotionTypeEnum.AdditionalProduct;
-            if (ipromotion == onSale)
+            if (ipromotion == PromotionTypeEnum.OnSale)
             {
-                Promotion promotion = new Promotion(product.ProductId, onSale, reductionRate, noOfItemsRequired);
+                Promotion promotion = new Promotion(product.ProductId, ipromotion, reductionRate, noOfItemsRequired);
 
-                promotion.Discount = (product.Price == (double)0)
+                promotion.Discount = (product.Price == 0)
                     ? promotion.Discount = 0
                     : promotion.Discount = (double)(reductionRate / product.Price);
 
                 return promotion;
             }
-            if (ipromotion == group)
+            if (ipromotion == PromotionTypeEnum.Group)
             {
-                Promotion promotion = new Promotion(product.ProductId, group, reductionRate, noOfItemsRequired);
+                Promotion promotion = new Promotion(product.ProductId, ipromotion, reductionRate, noOfItemsRequired);
 
-                promotion.Discount = (product.Price == (double)0)
+                promotion.Discount = (product.Price == 0)
                     ? promotion.Discount = 0
                     : promotion.Discount = (double)(reductionRate / product.Price);
 
                 return promotion;
             }
-            if (ipromotion == additional)
+            if (ipromotion == PromotionTypeEnum.AdditionalProduct)
             {
-                Promotion promotion = new Promotion(product.ProductId, additional, reductionRate, noOfItemsRequired);
-                promotion.Discount = (product.Price == (double)0)
+                Promotion promotion = new Promotion(product.ProductId, ipromotion, reductionRate, noOfItemsRequired);
+                promotion.Discount = (product.Price == 0)
                     ? promotion.Discount = 0
                     : promotion.Discount = (double)(1 - reductionRate / product.Price);
                 return promotion;
             }
             return null;
         }
-        public void ApplyOnSalePromotion(Promotion promotion, ref List<ProductPurchase> PurchaseItems)
+
+        private void ApplyOnSalePromotion(Promotion promotion, ref List<ProductPurchase> purchaseItems)
         {
-            foreach (ProductPurchase item in PurchaseItems.Where(pi => pi.Product.ProductId == promotion.ProductId))
+            foreach (ProductPurchase item in purchaseItems.Where(pi => pi.Product.ProductId == promotion.ProductId))
             {
                 double discountedPrice = (double)item.DiscountedPrice * promotion.Discount;
 
@@ -71,16 +69,16 @@ namespace BusinessProcess
             }
         }
 
-        public void ApplyGroupPromotion(Promotion promotion, ref List<ProductPurchase> PurchaseItems)
+        private void ApplyGroupPromotion(Promotion promotion, ref List<ProductPurchase> purchaseItems)
         {
-            IEnumerable<ProductPurchase> applicableItems = PurchaseItems.Where(pi => pi.Product.ProductId == promotion.ProductId).ToList();
+            IEnumerable<ProductPurchase> applicableItems = purchaseItems.Where(pi => pi.Product.ProductId == promotion.ProductId).ToList();
 
             if (promotion.NumberOfItemsRequired == 0)
                 return;
 
             for (int i = 0; i < applicableItems.Count(); i += promotion.NumberOfItemsRequired)
             {
-                IEnumerable<ProductPurchase> group = applicableItems.Skip(i).Take(promotion.NumberOfItemsRequired).ToList();
+                List<ProductPurchase> group = applicableItems.Skip(i).Take(promotion.NumberOfItemsRequired).ToList();
 
                 if (group.Count() != promotion.NumberOfItemsRequired)
                     continue;
@@ -94,16 +92,17 @@ namespace BusinessProcess
             }
         }
 
-        public void ApplyAdditionalProductPromotion(Promotion promotion, ref List<ProductPurchase> PurchaseItems)
+        private void ApplyAdditionalProductPromotion(Promotion promotion, ref List<ProductPurchase> purchaseItems)
         {
             IEnumerable<ProductPurchase> applicableItems =
-                PurchaseItems.Where(pi => pi.Product.ProductId == promotion.ProductId).ToList();
+                purchaseItems.Where(pi => pi.Product.ProductId == promotion.ProductId).ToList();
 
             for (int i = 0; i < applicableItems.Count(); i += promotion.NumberOfItemsRequired + 1)
             {
                 IEnumerable<ProductPurchase> group = applicableItems.Skip(i).Take(promotion.NumberOfItemsRequired + 1).ToList();
 
-                if (group.Count() != promotion.NumberOfItemsRequired + 1) continue;
+                if (group.Count() != promotion.NumberOfItemsRequired + 1)
+                    continue;
 
                 ProductPurchase item = group.Last();
 
@@ -112,28 +111,28 @@ namespace BusinessProcess
                 item.DiscountedPrice = Math.Round(discountedPrice, 2);
             }
         }
-        public void ApplyManyPromotions(List<Promotion> promotions, ref List<ProductPurchase> _purchasedItemList)
+        public void ApplyManyPromotions(List<Promotion> promotions, ref List<ProductPurchase> purchasedItemList)
         {
             foreach (Promotion promotion in promotions)
             {
-                ApplyPromotion(promotion, ref _purchasedItemList);
+                ApplyPromotion(promotion, ref purchasedItemList);
             }
         }
 
-        public void ApplyPromotion(Promotion promotion, ref List<ProductPurchase> _purchasedItemList)
+        private void ApplyPromotion(Promotion promotion, ref List<ProductPurchase> purchasedItemList)
         {
             switch (promotion.PromotionType)
             {
-                case (int)PromotionTypeEnum.OnSale:
-                    ApplyOnSalePromotion(promotion, ref _purchasedItemList);
+                case PromotionTypeEnum.OnSale:
+                    ApplyOnSalePromotion(promotion, ref purchasedItemList);
                     break;
 
-                case (int)PromotionTypeEnum.Group:
-                    ApplyGroupPromotion(promotion, ref _purchasedItemList);
+                case PromotionTypeEnum.Group:
+                    ApplyGroupPromotion(promotion, ref purchasedItemList);
                     break;
 
-                case (int)PromotionTypeEnum.AdditionalProduct:
-                    ApplyAdditionalProductPromotion(promotion, ref _purchasedItemList);
+                case PromotionTypeEnum.AdditionalProduct:
+                    ApplyAdditionalProductPromotion(promotion, ref purchasedItemList);
                     break;
 
                 default:

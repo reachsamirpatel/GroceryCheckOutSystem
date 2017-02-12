@@ -85,7 +85,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net">
-      <HintPath>..\..\..\3rdPartyDLL\log4net.dll</HintPath>
+      <HintPath>..\..\3rdPartyDLL\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ApplicationBlocks.ExceptionManagement, Version=1.0.3157.37063, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

@@ -26,11 +26,6 @@ namespace BusinessProcess
             Initialize();
         }
 
-        public CheckOutBP(List<ProductPurchase> productPurchaseList)
-        {
-            _purchasedItemList = productPurchaseList;
-            Initialize();
-        }
 
         private void Initialize()
         {
@@ -39,21 +34,17 @@ namespace BusinessProcess
             _repository = new Repository();
             _promotionList = _repository.PromotionRepository.GetAll();
             _productList = _repository.ProductRepository.GetAll();
-
         }
 
         public void Checkout(List<ProductPurchase> basketItems, List<Promotion> effectivePromotions)
         {
-            //  ProductPurchase purchase = new ProductPurchase();
 
             _promotionBp.ApplyManyPromotions(effectivePromotions, ref basketItems);
-
             DisplayReciept(basketItems);
         }
 
         private void DisplayReciept(List<ProductPurchase> purchase)
         {
-            // string receiptPath = Path.Combine(ConfigurationManager.AppSettings["ReceiptPath"], "receipt.txt");
             ReceiptBP receiptBp = new ReceiptBP();
             string receiptContent = receiptBp.CreateReceipt(purchase);
             File.WriteAllText(ConfigurationManager.AppSettings["ReceiptPath"], receiptContent);
@@ -64,7 +55,7 @@ namespace BusinessProcess
             List<ProductPurchase> purchasedItems = new List<ProductPurchase>();
             List<Promotion> effectivePromotions = new List<Promotion>();
 
-            IEnumerable<string> basketContents = GetBasketContents();
+            IEnumerable<string> basketContents = GetCheckOutItems();
 
             foreach (string basketItem in basketContents)
             {
@@ -80,10 +71,11 @@ namespace BusinessProcess
             Checkout(purchasedItems, effectivePromotions);
         }
 
-        private List<string> GetBasketContents()
+        private List<string> GetCheckOutItems()
         {
-            List<string> productNameList = _repository.ProductRepository.GetAll().Select(x => x.Name).ToList();
+            List<string> productNameList = _productList.Select(x => x.Name).ToList();
             List<string> basketItemList = File.ReadAllText(ConfigurationManager.AppSettings["BasketFileName"]).Split(',').ToList();
+            //Removing items that are not present int the product catalog.
             basketItemList.RemoveAll(item => !productNameList.Contains(item));
             return basketItemList;
         }
@@ -91,8 +83,6 @@ namespace BusinessProcess
         public void Start()
         {
             StartCheckout();
-
         }
-
     }
 }

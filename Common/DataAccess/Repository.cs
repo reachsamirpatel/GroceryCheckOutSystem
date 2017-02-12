@@ -11,13 +11,11 @@ namespace GroceryCheckOutSystem.DataAccess
         public string FilePath { get; set; }
         public ProductRepository ProductRepository { get; set; }
         public PromotionRepository PromotionRepository { get; set; }
-        //  public PromotionTypeRepository PromotionTypeRepository { get; set; }
 
         public Repository()
         {
             ProductRepository = new ProductRepository();
             PromotionRepository = new PromotionRepository();
-            // PromotionTypeRepository = new PromotionTypeRepository();
         }
     }
 }

@@ -25,44 +25,42 @@ namespace GroceryCheckOutSystem.Console
 
                 switch (mode)
                 {
-                    case "s":
-                        System.Console.WriteLine("Entering settings...");
-                        SettingsBP settings = new SettingsBP();
-                        settings.Start();
-                        break;
-
                     case "c":
                         System.Console.WriteLine("Entering checkout mode...");
                         CheckOutBP checkOutBp = new CheckOutBP();
                         checkOutBp.Start();
                         break;
-
+                    case "s":
+                        System.Console.WriteLine("Entering settings...");
+                        SettingsBP settings = new SettingsBP();
+                        settings.Start();
+                        break;
                     default:
                         System.Console.WriteLine("Invalid selection.");
                         break;
                 }
             }
 
-            List<Product> productList = new List<Product>()
-            {
-                new Product("Banana",1),
-                //new Product("Apple",2),
-                //new Product("Orange",3),
-                //new Product("Butter",4),
-                //new Product("Pineapple",5),
-                //new Product("Mango",6),
-                //new Product("Strawberry",7),
-            };
-            List<Promotion> PromotionList = new List<Promotion>()
-            {
-                new Promotion(Guid.NewGuid(),1,0.6,0),
-                //new Product("Apple",2),
-                //new Product("Orange",3),
-                //new Product("Butter",4),
-                //new Product("Pineapple",5),
-                //new Product("Mango",6),
-                //new Product("Strawberry",7),
-            };
+            //List<Product> productList = new List<Product>()
+            //{
+            //    new Product("Banana",1),
+            //    //new Product("Apple",2),
+            //    //new Product("Orange",3),
+            //    //new Product("Butter",4),
+            //    //new Product("Pineapple",5),
+            //    //new Product("Mango",6),
+            //    //new Product("Strawberry",7),
+            //};
+            //List<Promotion> PromotionList = new List<Promotion>()
+            //{
+            //    new Promotion(Guid.NewGuid(),1,0.6,0),
+            //    //new Product("Apple",2),
+            //    //new Product("Orange",3),
+            //    //new Product("Butter",4),
+            //    //new Product("Pineapple",5),
+            //    //new Product("Mango",6),
+            //    //new Product("Strawberry",7),
+            //};
             //List<PromotionType> promotionTypes = new List<PromotionType>()
             //{
             //    new PromotionType("OnSale", "0"),

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
+using GroceryCheckOut.Entity.Enums;
 using Interfaces;
 
 namespace GroceryCheckOut.Entity
@@ -18,7 +19,7 @@ namespace GroceryCheckOut.Entity
 
         [DataMember]
         // public PromotionType PromotionType { get; set; }
-        public int PromotionType { get; set; }
+        public PromotionTypeEnum PromotionType { get; set; }
 
         [DataMember]
         public double Discount { get; set; }
@@ -28,10 +29,9 @@ namespace GroceryCheckOut.Entity
 
         public Promotion()
         {
-
         }
 
-        public Promotion(Guid productId, int promotionType, double discount, int numberOfItemsRequired)
+        public Promotion(Guid productId, PromotionTypeEnum promotionType, double discount, int numberOfItemsRequired)
         {
             PromotionId = Guid.NewGuid();
             ProductId = productId;
@@ -40,7 +40,7 @@ namespace GroceryCheckOut.Entity
             NumberOfItemsRequired = numberOfItemsRequired;
         }
 
-        public Promotion(Guid promotionId, Guid productId, int promotionType, double discount, int numberOfItemsRequired)
+        public Promotion(Guid promotionId, Guid productId, PromotionTypeEnum promotionType, double discount, int numberOfItemsRequired)
         {
             PromotionId = promotionId;
             ProductId = productId;

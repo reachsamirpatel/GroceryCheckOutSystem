@@ -20,19 +20,18 @@ namespace BusinessProcess
         private PromotionBP _promotionBp;
         private List<Promotion> _promotionList;
         private List<Product> _productList;
-        //private List<PromotionType> _promotionTypeList;
+
         public SettingsBP()
+        {
+            Initialize();
+        }
+
+        private void Initialize()
         {
             _repository = new Repository();
             _promotionBp = new PromotionBP();
             _promotionList = _repository.PromotionRepository.GetAll();
             _productList = _repository.ProductRepository.GetAll();
-            //  _promotionTypeList = _repository.PromotionTypeRepository.GetAll();
-        }
-
-        private void Initialize()
-        {
-
         }
 
         public void Start()
@@ -67,7 +66,7 @@ namespace BusinessProcess
             }
         }
 
-        public void EndPromotion()
+        private void EndPromotion()
         {
 
             Product selectedItem = SelectProduct("Select the item to end promotions for:");
@@ -101,14 +100,9 @@ namespace BusinessProcess
                     Console.WriteLine("\t[{0}] {1}", i, product.Name);
                     i++;
                 }
-
-
                 Console.Write("Selection:");
-
                 string input = Console.ReadLine();
-
                 int selection;
-
                 if (int.TryParse(input, out selection) && (selection <= _productList.Count))
                     return _productList[selection - 1];
 
@@ -116,7 +110,7 @@ namespace BusinessProcess
             }
         }
 
-        public void StartPromotion()
+        private void StartPromotion()
         {
             Product toPromote = SelectProduct("Select a Product");
 
@@ -148,9 +142,7 @@ namespace BusinessProcess
         private void AddOnSalePromotion(Product groceryItem)
         {
             double salePrice = GetSalePrice();
-            int promotionEnumValue = (int)PromotionTypeEnum.OnSale;
-            //  PromotionType promotionType = _promotionTypeList.Find(x => x.ShortName == promotionEnumValue.ToString());
-            Promotion promotion = _promotionBp.CreatePromotion(groceryItem, promotionEnumValue, salePrice, 0);
+            Promotion promotion = _promotionBp.CreatePromotion(groceryItem, PromotionTypeEnum.OnSale, salePrice, 0);
             _promotionList.Add(promotion);
             _repository.PromotionRepository.UpSert(_promotionList);
         }
@@ -159,10 +151,7 @@ namespace BusinessProcess
         {
             int requiredItems = GetRequiredItems();
             double salePrice = GetSalePrice();
-            // PromotionType promotionType = _promotionList.Find(x => x.pro == PromotionTypeEnum.AdditionalProduct.ToString());
-            int promotionEnumValue = (int)PromotionTypeEnum.Group;
-            //  PromotionType promotionType = _promotionTypeList.Find(x => x.ShortName == promotionEnumValue.ToString());
-            Promotion promotion = _promotionBp.CreatePromotion(groceryItem, promotionEnumValue, salePrice, requiredItems);
+            Promotion promotion = _promotionBp.CreatePromotion(groceryItem, PromotionTypeEnum.Group, salePrice, requiredItems);
             _promotionList.Add(promotion);
             _repository.PromotionRepository.UpSert(_promotionList);
         }
@@ -174,21 +163,11 @@ namespace BusinessProcess
 
             if (discount > 1)
                 discount = discount / 100;
-            int promotionEnumValue = (int)PromotionTypeEnum.AdditionalProduct;
-            //  PromotionType promotionType = _promotionTypeList.Find(x => x.ShortName == promotionEnumValue.ToString());
-            Promotion promotion = _promotionBp.CreatePromotion(groceryItem, promotionEnumValue, discount, requiredItems);
+            Promotion promotion = _promotionBp.CreatePromotion(groceryItem, PromotionTypeEnum.AdditionalProduct, discount, requiredItems);
             _promotionList.Add(promotion);
             _repository.PromotionRepository.UpSert(_promotionList);
         }
 
-        private Product SelectGroceryItem()
-        {
-            Console.WriteLine("Select the item for this promotion:");
-
-            List<Product> items = _repository.ProductRepository.GetAll();
-
-            return ConsoleHelper.SelectFrom(items);
-        }
 
         private int GetRequiredItems()
         {
@@ -208,7 +187,5 @@ namespace BusinessProcess
             Console.WriteLine("There is already a promotion running for this item.");
             return true;
         }
-
-
     }
 }

@@ -14,7 +14,6 @@ namespace GroceryCheckOutSystem.DataAccess
         public List<Promotion> GetAll()
         {
             return base.GetAll<Promotion>();
-            //return base.GetList<Promotion>();
         }
 
         public void UpSert(List<Promotion> promotionList)
