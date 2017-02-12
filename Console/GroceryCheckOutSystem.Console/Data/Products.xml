@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Product>
+    <ProductId>110ae54c-01c5-4e24-9d1d-48be16040f81</ProductId>
+    <Name>Banana</Name>
+    <Price>1</Price>
+  </Product>
+  <Product>
+    <ProductId>84e4ea0f-0dc6-4ea1-8a0c-0b8f245628a2</ProductId>
+    <Name>Apple</Name>
+    <Price>2</Price>
+  </Product>
+  <Product>
+    <ProductId>d3d9dd02-1e27-4b4f-90b7-afff6e1c8ab1</ProductId>
+    <Name>Orange</Name>
+    <Price>3</Price>
+  </Product>
+  <Product>
+    <ProductId>c653e4be-c03f-404e-a367-30a96dbb38d8</ProductId>
+    <Name>Butter</Name>
+    <Price>4</Price>
+  </Product>
+  <Product>
+    <ProductId>fbf3f4a9-f2eb-49b3-85f0-b27c892880da</ProductId>
+    <Name>Pineapple</Name>
+    <Price>5</Price>
+  </Product>
+  <Product>
+    <ProductId>5acfa49b-d375-4f4c-90f5-fda42e738d94</ProductId>
+    <Name>Mango</Name>
+    <Price>6</Price>
+  </Product>
+</ArrayOfProduct>

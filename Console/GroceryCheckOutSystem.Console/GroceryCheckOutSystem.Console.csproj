@@ -33,6 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -53,6 +54,10 @@
       <Project>{2d92cd69-9d7b-4b02-ac0c-5d9c9b82f5a2}</Project>
       <Name>BusinessProcess</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Common\DataAccess\DataAccess.csproj">
+      <Project>{0deed932-d535-4c76-aeae-93189ab4306b}</Project>
+      <Name>DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Common\Entity\Entity.csproj">
       <Project>{c79c10d3-3cf6-4e5d-9926-e9209fa7c54c}</Project>
       <Name>Entity</Name>
@@ -60,6 +65,10 @@
     <ProjectReference Include="..\..\Common\Interfaces\Interfaces.csproj">
       <Project>{a1304dd1-08c4-4d00-9fd3-b45a0564bbf3}</Project>
       <Name>Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\Utility\Utility.csproj">
+      <Project>{f5de2672-e89a-4779-be86-78cf8b840966}</Project>
+      <Name>Utility</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

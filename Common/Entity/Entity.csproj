@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Enums\PromotionTypeEnum.cs" />
     <Compile Include="Product.cs" />
+    <Compile Include="ProductPurchase.cs" />
     <Compile Include="Promotion.cs" />
     <Compile Include="PromotionType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

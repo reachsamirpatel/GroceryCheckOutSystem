@@ -1,22 +1,24 @@
 ﻿using System;
 using System.Collections;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 using Interfaces;
 
 namespace GroceryCheckOut.Entity
 {
     [DataContract]
-    [Serializable]
+    [Serializable, XmlRoot("Promotions")]
     public class Promotion
     {
         [DataMember]
         public Guid PromotionId { get; set; }
 
         [DataMember]
-        public string ProductName { get; set; }
+        public Guid ProductId { get; set; }
 
         [DataMember]
-        public IPromotionType PromotionType { get; set; }
+        // public PromotionType PromotionType { get; set; }
+        public int PromotionType { get; set; }
 
         [DataMember]
         public double Discount { get; set; }
@@ -24,19 +26,24 @@ namespace GroceryCheckOut.Entity
         [DataMember]
         public int NumberOfItemsRequired { get; set; }
 
-        public Promotion(string name, IPromotionType promotionType, double discount = 0, int numberOfItemsRequired = 0)
+        public Promotion()
+        {
+
+        }
+
+        public Promotion(Guid productId, int promotionType, double discount, int numberOfItemsRequired)
         {
             PromotionId = Guid.NewGuid();
-            ProductName = name;
+            ProductId = productId;
             PromotionType = promotionType;
             Discount = discount;
             NumberOfItemsRequired = numberOfItemsRequired;
         }
 
-        public Promotion(Guid promotionId, string name, IPromotionType promotionType, double discount = 0, int numberOfItemsRequired = 0)
+        public Promotion(Guid promotionId, Guid productId, int promotionType, double discount, int numberOfItemsRequired)
         {
             PromotionId = promotionId;
-            ProductName = name;
+            ProductId = productId;
             PromotionType = promotionType;
             Discount = discount;
             NumberOfItemsRequired = numberOfItemsRequired;
