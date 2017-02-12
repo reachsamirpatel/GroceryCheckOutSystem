@@ -47,6 +47,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReceiptBP.cs" />
     <Compile Include="SettingsBP.cs" />
+    <Compile Include="UserBP.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccess\DataAccess.csproj">

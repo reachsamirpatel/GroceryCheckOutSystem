@@ -108,11 +108,17 @@ namespace Logging
                 EnvironmentVariableWriter.SetEnvironmentVariable("LoggingRoot", string.Empty);
             }
 
+            try
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.LoadXml("<log4net>" + xmlLoggingConfiguration + "</log4net>");
+                XmlConfigurator.Configure(doc.DocumentElement);
+                _isInitialized = true;
+            }
+            catch (Exception)
+            {
+            }
 
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml("<log4net>" + xmlLoggingConfiguration + "</log4net>");
-            XmlConfigurator.Configure(doc.DocumentElement);
-            _isInitialized = true;
         }
 
         private const int MAX_ARGLIST_LENGTH = 240;
@@ -172,8 +178,8 @@ namespace Logging
         //
         //			<root>
         //				<level value=""DEBUG"" />
-        //				<appender-ref ref=""EventLog"" />
-        //				<appender-ref ref=""Console"" />
+        //				<appender-ref=""EventLog"" />
+        //				<appender-ref=""Console"" />
         //			</root>				
         //		";
 
@@ -199,8 +205,8 @@ namespace Logging
         
         			<root>
         				<level value=""DEBUG"" />
-        				<appender-ref ref=""EventLog"" />
-        				<appender-ref ref=""Console"" />
+        				<appender-ref=""EventLog"" />
+        				<appender-ref=""Console"" />
         			</root>				
         		";
         private static void ConfigureDefaultLogging()

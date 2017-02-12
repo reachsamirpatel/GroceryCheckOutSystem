@@ -8,6 +8,7 @@ using GroceryCheckOut.Entity;
 using Utility;
 using System.IO;
 using BusinessProcess;
+using GroceryCheckOut.Entity.Enums;
 using GroceryCheckOutSystem.DataAccess;
 
 namespace GroceryCheckOutSystem.Console
@@ -16,31 +17,104 @@ namespace GroceryCheckOutSystem.Console
     {
         static void Main(string[] args)
         {
-
-            while (true)
+            //List<Login> loginList = new List<Login>
+            //{
+            //    new Login("clerk1",Encryptor.Base64Encode("test12"),new Guid("6fef5486-fd19-4ead-8090-e93dfc437641")),
+            //    new Login("marketing1",Encryptor.Base64Encode("test12"),new Guid("0326c248-106f-4990-82c3-b41dd6e1c553")),
+            //    new Login("clerk1",Encryptor.Base64Encode("test12"),new Guid("ad6deb47-dbc8-4c79-a9d3-6573af2f56c4"))
+            //};
+            //Repository repositoryBp = new Repository();
+            //repositoryBp.LoginRepository.UpSert(loginList);
+            //foreach (Login login in loginList)
+            //{
+            //    System.Console.WriteLine("{0}==>{1}", login.LoginName, Encryptor.Base64Decode(login.Password));
+            //}
+            UserBP userBp = new UserBP();
+            userBp.Start();
+            User currentUser = userBp.CurrentUser;
+            if (currentUser.UserType == UserTypeEnum.Admin)
             {
-                System.Console.Write("Select application mode ([C]heckout,[S]ettings)");
-
-                string mode = System.Console.ReadLine()?.ToLowerInvariant();
-
-                switch (mode)
+                while (true)
                 {
-                    case "c":
-                        System.Console.WriteLine("Entering checkout mode...");
-                        CheckOutBP checkOutBp = new CheckOutBP();
-                        checkOutBp.Start();
-                        break;
-                    case "s":
-                        System.Console.WriteLine("Entering settings...");
-                        SettingsBP settings = new SettingsBP();
-                        settings.Start();
-                        break;
-                    default:
-                        System.Console.WriteLine("Invalid selection.");
-                        break;
+                    System.Console.Write("Select application mode ([C]heckout,[S]ettings)");
+
+                    string mode = System.Console.ReadLine()?.ToLowerInvariant();
+                    System.Console.WriteLine("You have selected {0}", mode);
+                    switch (mode)
+                    {
+                        case "c":
+                            System.Console.WriteLine("Entering checkout mode...");
+                            CheckOutBP checkOutBp = new CheckOutBP();
+                            checkOutBp.Start();
+                            break;
+                        case "s":
+                            System.Console.WriteLine("Entering settings...");
+                            SettingsBP settings = new SettingsBP(userBp.CurrentUser);
+                            settings.Start();
+                            break;
+                        default:
+                            System.Console.WriteLine("Invalid selection.");
+                            break;
+                    }
                 }
             }
+            if (currentUser.UserType == UserTypeEnum.Marketing)
+            {
+                System.Console.WriteLine("You have access to Settings only.");
+                while (true)
+                {
+                    System.Console.Write("Select application mode ([E]xit,[S]ettings)");
 
+                    string mode = System.Console.ReadLine()?.ToLowerInvariant();
+                    switch (mode)
+                    {
+                        case "e":
+                            return;
+                            break;
+                        case "s":
+                            System.Console.WriteLine("Entering settings...");
+                            SettingsBP settings = new SettingsBP(userBp.CurrentUser);
+                            settings.Start();
+                            break;
+                        default:
+                            System.Console.WriteLine("Invalid selection.");
+                            break;
+                    }
+                }
+            }
+            if (currentUser.UserType == UserTypeEnum.Clerk)
+            {
+                System.Console.WriteLine("You have access to checkout only.");
+                while (true)
+                {
+                    System.Console.Write("Select application mode ([E]xit,[C]heckout)");
+
+                    string mode = System.Console.ReadLine()?.ToLowerInvariant();
+                    switch (mode)
+                    {
+                        case "e":
+                            return;
+                            break;
+                        case "c":
+                            System.Console.WriteLine("Entering checkout mode...");
+                            CheckOutBP checkOutBp = new CheckOutBP();
+                            checkOutBp.Start();
+                            break;
+                        default:
+                            System.Console.WriteLine("Invalid selection.");
+                            break;
+                    }
+                }
+
+            }
+            //List<User> userList = new List<User>()
+            //{
+            //    new User("Mike","Anderson","mike@yopmail.com",UserTypeEnum.Clerk),
+            //    new User("Jessica","Simpson","mike@yopmail.com",UserTypeEnum.Marketing),
+            //    new User("John","Kennedy","mike@yopmail.com",UserTypeEnum.Admin)
+            //};
+            //Repository repositoryBp = new Repository();
+            //repositoryBp.UserRepository.UpSert(userList);
             //List<Product> productList = new List<Product>()
             //{
             //    new Product("Banana",1),

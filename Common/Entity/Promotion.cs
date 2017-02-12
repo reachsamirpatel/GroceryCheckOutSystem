@@ -15,14 +15,25 @@ namespace GroceryCheckOut.Entity
         public Guid PromotionId { get; set; }
 
         [DataMember]
-        public Guid ProductId { get; set; }
+        public string Name { get; set; }
 
         [DataMember]
-        // public PromotionType PromotionType { get; set; }
         public PromotionTypeEnum PromotionType { get; set; }
 
         [DataMember]
         public double Discount { get; set; }
+
+        [DataMember]
+        public DateTime? StartDate { get; set; }
+
+        [DataMember]
+        public DateTime? EndDate { get; set; }
+
+        [DataMember]
+        public DateTime CreationDate { get; set; } = DateTime.Now;
+
+        [DataMember]
+        public Guid? CreatedBy { get; set; }
 
         [DataMember]
         public int NumberOfItemsRequired { get; set; }
@@ -30,20 +41,30 @@ namespace GroceryCheckOut.Entity
         public Promotion()
         {
         }
-
-        public Promotion(Guid productId, PromotionTypeEnum promotionType, double discount, int numberOfItemsRequired)
+        public Promotion(string name, PromotionTypeEnum promotionType, double discount, int numberOfItemsRequired, DateTime? startDate, DateTime? endDate, Guid? createdBy)
         {
             PromotionId = Guid.NewGuid();
-            ProductId = productId;
+            Name = name;
+            PromotionType = promotionType;
+            Discount = discount;
+            NumberOfItemsRequired = numberOfItemsRequired;
+            StartDate = startDate;
+            EndDate = endDate;
+            CreatedBy = createdBy;
+        }
+        public Promotion(string name, PromotionTypeEnum promotionType, double discount, int numberOfItemsRequired)
+        {
+            PromotionId = Guid.NewGuid();
+            Name = name;
             PromotionType = promotionType;
             Discount = discount;
             NumberOfItemsRequired = numberOfItemsRequired;
         }
 
-        public Promotion(Guid promotionId, Guid productId, PromotionTypeEnum promotionType, double discount, int numberOfItemsRequired)
+        public Promotion(Guid promotionId, string name, PromotionTypeEnum promotionType, double discount, int numberOfItemsRequired)
         {
             PromotionId = promotionId;
-            ProductId = productId;
+            Name = name;
             PromotionType = promotionType;
             Discount = discount;
             NumberOfItemsRequired = numberOfItemsRequired;

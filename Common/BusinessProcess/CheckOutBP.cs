@@ -16,7 +16,7 @@ namespace BusinessProcess
 {
     public class CheckOutBP
     {
-        private List<ProductPurchase> _purchasedItemList;
+
         private PromotionBP _promotionBp;
         private List<Product> _productList;
         private List<Promotion> _promotionList;
@@ -29,17 +29,16 @@ namespace BusinessProcess
 
         private void Initialize()
         {
-            _purchasedItemList = new List<ProductPurchase>();
             _promotionBp = new PromotionBP();
             _repository = new Repository();
             _promotionList = _repository.PromotionRepository.GetAll();
             _productList = _repository.ProductRepository.GetAll();
         }
 
-        public void Checkout(List<ProductPurchase> basketItems, List<Promotion> effectivePromotions)
+        private void Checkout(List<ProductPurchase> basketItems, List<Promotion> effectivePromotions)
         {
 
-            _promotionBp.ApplyManyPromotions(effectivePromotions, ref basketItems);
+            _promotionBp.ApplyManyPromotions(effectivePromotions, basketItems);
             DisplayReciept(basketItems);
         }
 
@@ -62,10 +61,17 @@ namespace BusinessProcess
                 Product purchasedGroceryItem = _productList.Single(i => i.Name == basketItem);
                 purchasedItems.Add(new ProductPurchase(purchasedGroceryItem));
 
-                Promotion promotion = _promotionList.SingleOrDefault(p => p.ProductId == purchasedGroceryItem.ProductId);
+                Promotion promotion = _promotionList.SingleOrDefault(p => p.Name == purchasedGroceryItem.Name);
 
-                if ((promotion != null) && !effectivePromotions.Exists(p => p.ProductId == promotion.ProductId))
-                    effectivePromotions.Add(promotion);
+                if ((promotion != null) && !effectivePromotions.Exists(p => p.Name == promotion.Name))
+                {
+                    if (promotion.EndDate != null && (promotion.StartDate != null && (DateTime.Now.Ticks >= promotion.StartDate.Value.Ticks && DateTime.Now.Ticks < promotion.EndDate.Value.Ticks)))
+                        effectivePromotions.Add(promotion);
+                    else if (promotion.StartDate == null || promotion.EndDate == null)
+                    {
+                        effectivePromotions.Add(promotion);
+                    }
+                }
             }
 
             Checkout(purchasedItems, effectivePromotions);
