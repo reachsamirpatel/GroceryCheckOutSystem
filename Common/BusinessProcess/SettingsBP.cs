@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using GroceryCheckOut.Entity;
 using GroceryCheckOut.Entity.Enums;
 using GroceryCheckOutSystem.DataAccess;
+using Logging;
 using Utility;
 
 namespace BusinessProcess
@@ -19,6 +20,7 @@ namespace BusinessProcess
         private PromotionBP _promotionBp;
         private List<Promotion> _promotionList;
         private List<Product> _productList;
+        private ILogger _log;
         public User CurrentUser;
         public SettingsBP(User user)
         {
@@ -32,56 +34,74 @@ namespace BusinessProcess
             CurrentUser = user;
             _promotionList = _repository.PromotionRepository.GetAll();
             _productList = _repository.ProductRepository.GetAll();
+            _log = LogManager.GetLogger(this);
         }
 
         public void Start()
         {
-            bool goBack = false;
-
-            while (!goBack)
+            try
             {
-                Console.WriteLine("Select an action...");
-                Console.Write("[A]dd a new Promotion | [E]nd an existing Promotion | Go [b]ack:");
+                bool goBack = false;
 
-                string action = Console.ReadLine()?.ToLowerInvariant();
-                Console.WriteLine("You have selected : {0}", action);
-                switch (action)
+                while (!goBack)
                 {
-                    case "a":
-                        StartPromotion();
-                        break;
+                    Console.WriteLine("Select an action...");
+                    Console.Write("[A]dd a new Promotion | [E]nd an existing Promotion | Go [b]ack:");
 
-                    case "e":
-                        EndPromotion();
-                        break;
+                    string action = Console.ReadLine()?.ToLowerInvariant();
+                    Console.WriteLine("You have selected : {0}", action);
+                    switch (action)
+                    {
+                        case "a":
+                            StartPromotion();
+                            break;
 
-                    case "b":
-                        goBack = true;
-                        break;
+                        case "e":
+                            EndPromotion();
+                            break;
 
-                    default:
-                        Console.WriteLine("Invalid selection.");
-                        break;
+                        case "b":
+                            goBack = true;
+                            break;
+
+                        default:
+                            Console.WriteLine("Invalid selection.");
+                            break;
+                    }
                 }
+            }
+            catch (Exception exp)
+            {
+                _log.Error(exp.Message);
+                _log.Error(exp.StackTrace);
+                throw;
             }
         }
 
         private void EndPromotion()
         {
-
-            Product selectedItem = SelectProduct("Select the item to end promotions for:");
-
-            Promotion toRemove = _promotionList.SingleOrDefault(p => p.Name == selectedItem.Name);
-
-            if (toRemove != null)
+            try
             {
-                _promotionList.Remove(toRemove);
-                Console.WriteLine("Promotion for {0} has been ended.", selectedItem.Name);
-                _repository.PromotionRepository.UpSert(_promotionList);
+                Product selectedItem = SelectProduct("Select the item to end promotions for:");
+
+                Promotion toRemove = _promotionList.SingleOrDefault(p => p.Name == selectedItem.Name);
+
+                if (toRemove != null)
+                {
+                    _promotionList.Remove(toRemove);
+                    Console.WriteLine("Promotion for {0} has been ended.", selectedItem.Name);
+                    _repository.PromotionRepository.UpSert(_promotionList);
+                }
+                else
+                {
+                    Console.WriteLine("No promotions for {0} to end.", selectedItem.Name);
+                }
             }
-            else
+            catch (Exception exp)
             {
-                Console.WriteLine("No promotions for {0} to end.", selectedItem.Name);
+                _log.Error(exp.Message);
+                _log.Error(exp.StackTrace);
+                throw;
             }
         }
 
@@ -112,32 +132,41 @@ namespace BusinessProcess
 
         private void StartPromotion()
         {
-            Product toPromote = SelectProduct("Select a Product");
-
-            if (GroceryItemHasExistingPromotions(toPromote.Name))
-                return;
-
-            Console.WriteLine("Select the type of promotion you want to create...");
-
-            PromotionTypeEnum type = SelectFrom(Enum.GetValues(typeof(PromotionTypeEnum)).Cast<PromotionTypeEnum>());
-
-            switch (type)
+            try
             {
-                case PromotionTypeEnum.OnSale:
-                    AddOnSalePromotion(toPromote);
-                    break;
-                case PromotionTypeEnum.Group:
-                    AddGroupPromotion(toPromote);
-                    break;
-                case PromotionTypeEnum.AdditionalProduct:
-                    AddAdditionalProductPromotion(toPromote);
-                    break;
-                default:
-                    Console.WriteLine("Invalid selection.");
-                    return;
-            }
+                Product toPromote = SelectProduct("Select a Product");
 
-            Console.WriteLine("Promotion added for {0}.", toPromote.Name);
+                if (GroceryItemHasExistingPromotions(toPromote.Name))
+                    return;
+
+                Console.WriteLine("Select the type of promotion you want to create...");
+
+                PromotionTypeEnum type = SelectFrom(Enum.GetValues(typeof(PromotionTypeEnum)).Cast<PromotionTypeEnum>());
+
+                switch (type)
+                {
+                    case PromotionTypeEnum.OnSale:
+                        AddOnSalePromotion(toPromote);
+                        break;
+                    case PromotionTypeEnum.Group:
+                        AddGroupPromotion(toPromote);
+                        break;
+                    case PromotionTypeEnum.AdditionalProduct:
+                        AddAdditionalProductPromotion(toPromote);
+                        break;
+                    default:
+                        Console.WriteLine("Invalid selection.");
+                        return;
+                }
+
+                Console.WriteLine("Promotion added for {0}.", toPromote.Name);
+            }
+            catch (Exception exp)
+            {
+                _log.Error(exp.Message);
+                _log.Error(exp.StackTrace);
+                throw;
+            }
         }
         private double GetDouble(string prompt = null)
         {

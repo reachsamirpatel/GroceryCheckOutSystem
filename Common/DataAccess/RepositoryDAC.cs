@@ -23,8 +23,16 @@ namespace GroceryCheckOutSystem.DataAccess
         }
         public void UpSert<T>(T t) where T : class
         {
-
-            File.WriteAllText(FilePath, ParseHelper.ToXML(t));
+            try
+            {
+                File.WriteAllText(FilePath, ParseHelper.ToXML(t));
+            }
+            catch (Exception exp)
+            {
+                _log.Error(exp.Message);
+                _log.Error(exp.StackTrace);
+                throw;
+            }
         }
 
         public List<T> GetAll<T>() where T : class

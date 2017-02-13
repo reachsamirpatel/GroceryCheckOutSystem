@@ -24,8 +24,32 @@ namespace BusinessProcess
 
         public string CreateReceipt(List<ProductPurchase> purchasedProductList, User user)
         {
+            try
+            {
+                var sb = AddHeader(user);
+                foreach (ProductPurchase item in purchasedProductList)
+                {
+                    sb.AppendFormat("{0,10}{1,10}{2,15}{3,15}{4,15}", item.Product.Name, item.Quantity,
+                        item.Product.Price.ToString("C"),
+                        item.DiscountedPrice.ToString("C"), (item.Product.Price - item.DiscountedPrice).ToString("C"));
+                    sb.AppendLine();
+                }
+                sb.Append(PrintSummary(purchasedProductList));
+                _log.Debug(sb.ToString());
+                return sb.ToString();
+            }
+            catch (Exception exp)
+            {
+                _log.Error(exp.Message);
+                _log.Error(exp.StackTrace);
+                throw;
+            }
+        }
+
+        private StringBuilder AddHeader(User user)
+        {
             string delimiter = "**************************************************************************" +
-                              Environment.NewLine;
+                               Environment.NewLine;
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat("{0,40}", ConfigurationManager.AppSettings["StoreName"]);
             sb.AppendLine();
@@ -36,25 +60,18 @@ namespace BusinessProcess
             String transactionId = generator.Next(0, 1000000).ToString("D6");
             sb.AppendFormat("Transaction Id : {0}", transactionId);
             sb.AppendLine();
-            sb.AppendFormat("EmployeeId: {0} {1,30} {2} {3}", generator.Next(0, 1000000).ToString("D6"), "Name:", user.FirstName, user.LastName);
+            sb.AppendFormat("EmployeeId: {0} {1,30} {2} {3}", generator.Next(0, 1000000).ToString("D6"), "Name:", user.FirstName,
+                user.LastName);
             sb.AppendLine();
             sb.AppendFormat("Order Taken: {0}", DateTime.Now);
             sb.AppendLine();
             sb.Append(delimiter);
             sb.AppendFormat("{0,10}{1,10}{2,15}{3,15}{4,15}", "Product", "Quantity", "Unit Price", "Sale Price", "Savings");
             sb.AppendLine();
-            foreach (ProductPurchase item in purchasedProductList)
-            {
-                sb.AppendFormat("{0,10}{1,10}{2,15}{3,15}{4,15}", item.Product.Name, item.Quantity, item.Product.Price.ToString("C"),
-                    item.DiscountedPrice.ToString("C"), (item.Product.Price - item.DiscountedPrice).ToString("C"));
-                sb.AppendLine();
-            }
-            sb.Append(PrintSummary(purchasedProductList));
-            _log.Debug(sb.ToString());
-            return sb.ToString();
+            return sb;
         }
 
-        private static StringBuilder PrintSummary(List<ProductPurchase> purchasedProductList)
+        private StringBuilder PrintSummary(List<ProductPurchase> purchasedProductList)
         {
             IEnumerable<ProductPurchase> query =
                from ci in purchasedProductList
@@ -81,6 +98,12 @@ namespace BusinessProcess
                 sb.AppendFormat("{0,10}{1,10}{2,20}{3,20}{4,20}", item.Product.Name, item.Quantity, item.Product.Price.ToString("C"),
                     item.DiscountedPrice.ToString("C"), Environment.NewLine);
             }
+            AddFooter(purchasedProductList, sb, delimiter);
+            return sb;
+        }
+
+        private void AddFooter(List<ProductPurchase> purchasedProductList, StringBuilder sb, string delimiter)
+        {
             sb.Append(delimiter);
             sb.AppendLine();
             double totalRawPrice = purchasedProductList.Sum(x => x.Product.Price);
@@ -99,7 +122,6 @@ namespace BusinessProcess
             sb.AppendLine();
             sb.Append(delimiter);
             sb.AppendFormat("Total : {0,29}", total.ToString("C"));
-            return sb;
         }
     }
 }

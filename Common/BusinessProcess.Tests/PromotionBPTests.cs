@@ -13,11 +13,6 @@ namespace BusinessProcess.Tests
     [TestFixture]
     public class PromotionBPTests
     {
-        [Test]
-        public void PromotionBPTest()
-        {
-            Assert.Pass();
-        }
 
         [Test]
         public void CreatePromotionTest()

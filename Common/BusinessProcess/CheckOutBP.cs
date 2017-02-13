@@ -10,6 +10,7 @@ using GroceryCheckOut.Entity;
 using System.Windows.Forms;
 using GroceryCheckOut.Entity.Enums;
 using GroceryCheckOutSystem.DataAccess;
+using Logging;
 
 
 namespace BusinessProcess
@@ -22,6 +23,7 @@ namespace BusinessProcess
         private List<Promotion> _promotionList;
         private Repository _repository;
         public User CurrentUser;
+        private ILogger _log;
         public CheckOutBP(User user)
         {
             Initialize(user);
@@ -35,62 +37,103 @@ namespace BusinessProcess
             _promotionList = _repository.PromotionRepository.GetAll();
             _productList = _repository.ProductRepository.GetAll();
             CurrentUser = user;
+            _log = LogManager.GetLogger(this);
         }
 
         private void Checkout(List<ProductPurchase> basketItems, List<Promotion> effectivePromotions)
         {
-
-            _promotionBp.ApplyManyPromotions(effectivePromotions, basketItems);
-            DisplayReciept(basketItems);
+            try
+            {
+                _promotionBp.ApplyManyPromotions(effectivePromotions, basketItems);
+                DisplayReciept(basketItems);
+            }
+            catch (Exception exp)
+            {
+                _log.Error(exp.Message);
+                _log.Error(exp.StackTrace);
+                throw;
+            }
         }
 
         private void DisplayReciept(List<ProductPurchase> purchase)
         {
-            ReceiptBP receiptBp = new ReceiptBP();
-            string receiptContent = receiptBp.CreateReceipt(purchase, CurrentUser);
-            File.WriteAllText(ConfigurationManager.AppSettings["ReceiptFileName"], receiptContent);
-            ProcessStartInfo startInfo = new ProcessStartInfo("notepad.exe")
+            try
             {
-                Arguments = ConfigurationManager.AppSettings["ReceiptFileName"],
-                WindowStyle = ProcessWindowStyle.Maximized
-            };
-            Process.Start(startInfo);
+                ReceiptBP receiptBp = new ReceiptBP();
+                string receiptContent = receiptBp.CreateReceipt(purchase, CurrentUser);
+                File.WriteAllText(ConfigurationManager.AppSettings["ReceiptFileName"], receiptContent);
+                ProcessStartInfo startInfo = new ProcessStartInfo("notepad.exe")
+                {
+                    Arguments = ConfigurationManager.AppSettings["ReceiptFileName"],
+                    WindowStyle = ProcessWindowStyle.Maximized
+                };
+                Process.Start(startInfo);
+            }
+            catch (Exception exp)
+            {
+                _log.Error(exp.Message);
+                _log.Error(exp.StackTrace);
+                throw;
+            }
         }
+
         private void StartCheckout()
         {
-            List<ProductPurchase> purchasedItems = new List<ProductPurchase>();
-            List<Promotion> effectivePromotions = new List<Promotion>();
-
-            IEnumerable<string> basketContents = GetCheckOutItems();
-
-            foreach (string basketItem in basketContents)
+            try
             {
-                Product purchasedGroceryItem = _productList.Single(i => i.Name == basketItem);
-                purchasedItems.Add(new ProductPurchase(purchasedGroceryItem));
+                List<ProductPurchase> purchasedItems = new List<ProductPurchase>();
+                List<Promotion> effectivePromotions = new List<Promotion>();
 
-                Promotion promotion = _promotionList.SingleOrDefault(p => p.Name == purchasedGroceryItem.Name);
+                IEnumerable<string> basketContents = GetCheckOutItems();
 
-                if ((promotion != null) && !effectivePromotions.Exists(p => p.Name == promotion.Name))
+                foreach (string basketItem in basketContents)
                 {
-                    if (promotion.EndDate != null && (promotion.StartDate != null && (DateTime.Now.Ticks >= promotion.StartDate.Value.Ticks && DateTime.Now.Ticks < promotion.EndDate.Value.Ticks)))
-                        effectivePromotions.Add(promotion);
-                    else if (promotion.StartDate == null || promotion.EndDate == null)
+                    Product purchasedGroceryItem = _productList.Single(i => i.Name == basketItem);
+                    purchasedItems.Add(new ProductPurchase(purchasedGroceryItem));
+
+                    Promotion promotion = _promotionList.SingleOrDefault(p => p.Name == purchasedGroceryItem.Name);
+
+                    if ((promotion != null) && !effectivePromotions.Exists(p => p.Name == promotion.Name))
                     {
-                        effectivePromotions.Add(promotion);
+                        if (promotion.EndDate != null &&
+                            (promotion.StartDate != null &&
+                             (DateTime.Now.Ticks >= promotion.StartDate.Value.Ticks &&
+                              DateTime.Now.Ticks < promotion.EndDate.Value.Ticks)))
+                            effectivePromotions.Add(promotion);
+                        else if (promotion.StartDate == null || promotion.EndDate == null)
+                        {
+                            effectivePromotions.Add(promotion);
+                        }
                     }
                 }
-            }
 
-            Checkout(purchasedItems, effectivePromotions);
+                Checkout(purchasedItems, effectivePromotions);
+            }
+            catch (Exception exp)
+            {
+                _log.Error(exp.Message);
+                _log.Error(exp.StackTrace);
+                throw;
+            }
         }
 
         private List<string> GetCheckOutItems()
         {
-            List<string> productNameList = _productList.Select(x => x.Name).ToList();
-            List<string> basketItemList = File.ReadAllText(ConfigurationManager.AppSettings["BasketFileName"]).Split(',').ToList();
-            //Removing items that are not present int the product catalog.
-            basketItemList.RemoveAll(item => !productNameList.Contains(item));
-            return basketItemList;
+            try
+            {
+                List<string> productNameList = _productList.Select(x => x.Name).ToList();
+                List<string> basketItemList =
+                    File.ReadAllText(ConfigurationManager.AppSettings["BasketFileName"]).Split(',').ToList();
+                //Removing items that are not present int the product catalog.
+                basketItemList.RemoveAll(item => !productNameList.Contains(item));
+                return basketItemList;
+            }
+            catch (Exception exp)
+            {
+                _log.Error(exp.Message);
+                _log.Error(exp.StackTrace);
+                throw;
+            }
         }
 
         public void Start()
