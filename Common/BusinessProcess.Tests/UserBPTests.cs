@@ -13,12 +13,6 @@ namespace BusinessProcess.Tests
     public class UserBPTests
     {
         [Test()]
-        public void UserBPTest()
-        {
-            Assert.Fail();
-        }
-
-        [Test()]
         public void CheckCredentialsTest()
         {
             UserBP userBp = new UserBP();
