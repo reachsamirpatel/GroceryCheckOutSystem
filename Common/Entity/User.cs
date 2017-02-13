@@ -24,6 +24,14 @@ namespace GroceryCheckOut.Entity
             Email = email;
             UserType = userType;
         }
+        public User(Guid userId, string firstName, string lastName, string email, UserTypeEnum userType)
+        {
+            UserId = userId;
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
+            UserType = userType;
+        }
         [DataMember]
         public UserTypeEnum UserType { get; set; }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,18 +22,32 @@ namespace BusinessProcess
             _log = LogManager.GetLogger(this);
         }
 
-        public string CreateReceipt(List<ProductPurchase> purchasedProductList)
+        public string CreateReceipt(List<ProductPurchase> purchasedProductList, User user)
         {
             string delimiter = "**************************************************************************" +
                               Environment.NewLine;
             StringBuilder sb = new StringBuilder();
+            sb.AppendFormat("{0,40}", ConfigurationManager.AppSettings["StoreName"]);
+            sb.AppendLine();
+            sb.AppendFormat("{0,50}", ConfigurationManager.AppSettings["StoreAddress"]);
+            sb.AppendLine();
+            sb.AppendLine();
+            Random generator = new Random();
+            String transactionId = generator.Next(0, 1000000).ToString("D6");
+            sb.AppendFormat("Transaction Id : {0}", transactionId);
+            sb.AppendLine();
+            sb.AppendFormat("EmployeeId: {0} {1,30} {2} {3}", generator.Next(0, 1000000).ToString("D6"), "Name:", user.FirstName, user.LastName);
+            sb.AppendLine();
+            sb.AppendFormat("Order Taken: {0}", DateTime.Now);
+            sb.AppendLine();
             sb.Append(delimiter);
-            sb.AppendFormat("{0,10}{1,10}{2,20}{3,20}{4,20}", "Product", "Quantity", "Unit Price", "Total Sale Price",
-                Environment.NewLine);
+            sb.AppendFormat("{0,10}{1,10}{2,15}{3,15}{4,15}", "Product", "Quantity", "Unit Price", "Sale Price", "Savings");
+            sb.AppendLine();
             foreach (ProductPurchase item in purchasedProductList)
             {
-                sb.AppendFormat("{0,10}{1,10}{2,20}{3,20}{4,20}", item.Product.Name, item.Quantity, item.Product.Price.ToString("C"),
-                    item.DiscountedPrice.ToString("C"), Environment.NewLine);
+                sb.AppendFormat("{0,10}{1,10}{2,15}{3,15}{4,15}", item.Product.Name, item.Quantity, item.Product.Price.ToString("C"),
+                    item.DiscountedPrice.ToString("C"), (item.Product.Price - item.DiscountedPrice).ToString("C"));
+                sb.AppendLine();
             }
             sb.Append(PrintSummary(purchasedProductList));
             _log.Debug(sb.ToString());

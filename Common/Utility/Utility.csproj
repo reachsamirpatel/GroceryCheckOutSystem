@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConsoleHelper.cs" />
     <Compile Include="Encryptor.cs" />
     <Compile Include="ParseHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

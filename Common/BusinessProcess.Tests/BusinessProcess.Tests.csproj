@@ -70,6 +70,7 @@
     <Compile Include="ReceiptBPTests.cs" />
     <Compile Include="SettingsBPTests.cs" />
     <Compile Include="TestHelper.cs" />
+    <Compile Include="UserBPTests.cs" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">

@@ -12,13 +12,13 @@
     <UserId>0326c248-106f-4990-82c3-b41dd6e1c553</UserId>
     <FirstName>Jessica</FirstName>
     <LastName>Simpson</LastName>
-    <Email>mike@yopmail.com</Email>
+    <Email>jessica@yopmail.com</Email>
   </User>
   <User>
     <UserType>Admin</UserType>
     <UserId>ad6deb47-dbc8-4c79-a9d3-6573af2f56c4</UserId>
     <FirstName>John</FirstName>
     <LastName>Kennedy</LastName>
-    <Email>mike@yopmail.com</Email>
+    <Email>john@yopmail.com</Email>
   </User>
 </ArrayOfUser>

@@ -44,7 +44,7 @@ namespace GroceryCheckOutSystem.Console
                     {
                         case "c":
                             System.Console.WriteLine("Entering checkout mode...");
-                            CheckOutBP checkOutBp = new CheckOutBP();
+                            CheckOutBP checkOutBp = new CheckOutBP(userBp.CurrentUser);
                             checkOutBp.Start();
                             break;
                         case "s":
@@ -97,7 +97,7 @@ namespace GroceryCheckOutSystem.Console
                             break;
                         case "c":
                             System.Console.WriteLine("Entering checkout mode...");
-                            CheckOutBP checkOutBp = new CheckOutBP();
+                            CheckOutBP checkOutBp = new CheckOutBP(userBp.CurrentUser);
                             checkOutBp.Start();
                             break;
                         default:

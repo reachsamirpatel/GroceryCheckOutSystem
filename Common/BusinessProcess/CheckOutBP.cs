@@ -21,18 +21,20 @@ namespace BusinessProcess
         private List<Product> _productList;
         private List<Promotion> _promotionList;
         private Repository _repository;
-        public CheckOutBP()
+        public User CurrentUser;
+        public CheckOutBP(User user)
         {
-            Initialize();
+            Initialize(user);
         }
 
 
-        private void Initialize()
+        private void Initialize(User user)
         {
             _promotionBp = new PromotionBP();
             _repository = new Repository();
             _promotionList = _repository.PromotionRepository.GetAll();
             _productList = _repository.ProductRepository.GetAll();
+            CurrentUser = user;
         }
 
         private void Checkout(List<ProductPurchase> basketItems, List<Promotion> effectivePromotions)
@@ -45,9 +47,14 @@ namespace BusinessProcess
         private void DisplayReciept(List<ProductPurchase> purchase)
         {
             ReceiptBP receiptBp = new ReceiptBP();
-            string receiptContent = receiptBp.CreateReceipt(purchase);
-            File.WriteAllText(ConfigurationManager.AppSettings["ReceiptPath"], receiptContent);
-            Process.Start(ConfigurationManager.AppSettings["ReceiptPath"]);
+            string receiptContent = receiptBp.CreateReceipt(purchase, CurrentUser);
+            File.WriteAllText(ConfigurationManager.AppSettings["ReceiptFileName"], receiptContent);
+            ProcessStartInfo startInfo = new ProcessStartInfo("notepad.exe")
+            {
+                Arguments = ConfigurationManager.AppSettings["ReceiptFileName"],
+                WindowStyle = ProcessWindowStyle.Maximized
+            };
+            Process.Start(startInfo);
         }
         private void StartCheckout()
         {
