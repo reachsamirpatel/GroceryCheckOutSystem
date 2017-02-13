@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfPromotion xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Promotion>
+    <PromotionId>a45410af-dde1-4cae-9ebc-8eefb73ee897</PromotionId>
+    <Name>Banana</Name>
+    <PromotionType>Group</PromotionType>
+    <Discount>0.77</Discount>
+    <StartDate>2017-01-02T00:00:00</StartDate>
+    <EndDate>2018-01-02T00:00:00</EndDate>
+    <CreationDate>2017-02-12T19:39:05.7446149-05:00</CreationDate>
+    <CreatedBy>ad6deb47-dbc8-4c79-a9d3-6573af2f56c4</CreatedBy>
+    <NumberOfItemsRequired>2</NumberOfItemsRequired>
+  </Promotion>
+  <Promotion>
+    <PromotionId>8062aa5c-560b-4db8-bef9-54910cca335c</PromotionId>
+    <Name>Apple</Name>
+    <PromotionType>Group</PromotionType>
+    <Discount>0.885</Discount>
+    <StartDate>2017-02-12T00:00:00</StartDate>
+    <EndDate>2018-02-12T00:00:00</EndDate>
+    <CreationDate>2017-02-12T21:55:50.8249156-05:00</CreationDate>
+    <CreatedBy>0326c248-106f-4990-82c3-b41dd6e1c553</CreatedBy>
+    <NumberOfItemsRequired>2</NumberOfItemsRequired>
+  </Promotion>
+</ArrayOfPromotion>
