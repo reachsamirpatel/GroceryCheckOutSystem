@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Utility
 {
+    /// <summary>
+    /// Method to mask console input for password.
+    /// </summary>
     public static class ConsoleHelper
     {
         public static string ReadLineMasked(char mask = '*')

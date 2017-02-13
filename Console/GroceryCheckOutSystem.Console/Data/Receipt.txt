@@ -1,9 +1,9 @@
                                GroceryCo
                      328 BLOOR STREET WEST TORONTO
 
-Transaction Id : 190370
-EmployeeId: 826438                          Name: Mike Anderson
-Order Taken: 2/13/2017 12:58:06 AM
+Transaction Id : 631703
+EmployeeId: 632385                          Name: Mike Anderson
+Order Taken: 2/13/2017 2:13:58 AM
 **************************************************************************
    Product  Quantity     Unit Price     Sale Price        Savings
     Banana         1          $1.00          $0.77          $0.23

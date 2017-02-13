@@ -11,6 +11,9 @@ using Utility;
 
 namespace BusinessProcess
 {
+    /// <summary>
+    /// Class to perform user related operations
+    /// </summary>
     public class UserBP
     {
         private List<Login> _loginList;
@@ -31,7 +34,12 @@ namespace BusinessProcess
             _loginList = _repository.LoginRepository.GetAll();
             _log = LogManager.GetLogger(this);
         }
-
+        /// <summary>
+        /// Method to check user credentials
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public User CheckCredentials(string username, string password)
         {
             try
@@ -53,7 +61,9 @@ namespace BusinessProcess
                 throw;
             }
         }
-
+        /// <summary>
+        /// Wrapper method to authenticate and authorize user
+        /// </summary>
         public void Start()
         {
             try

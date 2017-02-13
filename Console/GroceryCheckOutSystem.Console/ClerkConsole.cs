@@ -2,6 +2,8 @@ using BusinessProcess;
 
 namespace GroceryCheckOutSystem.Console
 {
+    //Console app to perform actions Clerk Usertype.
+    //Only checkout is performed by the user.
     public class ClerkConsole
     {
         public static void Start(UserBP userBp)

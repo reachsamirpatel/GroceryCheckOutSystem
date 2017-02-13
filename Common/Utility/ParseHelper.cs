@@ -13,9 +13,17 @@ using System.Xml.XPath;
 
 namespace Utility
 {
+    /// <summary>
+    /// Class to perform xml serializing and deserializing xml
+    /// </summary>
     static public class ParseHelper
     {
-
+        /// <summary>
+        /// Serialize an object to xml
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public static string ToXML<T>(T obj)
         {
             using (StringWriter stringWriter = new Utf8StringWriter())
@@ -25,7 +33,12 @@ namespace Utility
                 return stringWriter.ToString();
             }
         }
-
+        /// <summary>
+        /// Deserialzed object from xml
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="xml"></param>
+        /// <returns></returns>
         public static T FromXML<T>(string xml)
         {
             using (StringReader stringReader = new StringReader(xml))
@@ -35,6 +48,10 @@ namespace Utility
             }
         }
     }
+
+    /// <summary>
+    /// Class to create UTF-8 decoded xml
+    /// </summary>
     public class Utf8StringWriter : StringWriter
     {
         public override Encoding Encoding

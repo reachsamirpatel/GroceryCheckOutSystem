@@ -17,9 +17,12 @@ namespace GroceryCheckOutSystem.Console
     {
         static void Main(string[] args)
         {
+            //Check whether file required by the application is actually present or not
             if (!ValidationConsole.PerformHealthCheck())
                 return;
+
             UserBP userBp = new UserBP();
+            //Check login credentials
             userBp.Start();
             User currentUser = userBp.CurrentUser;
             if (currentUser.UserType == UserTypeEnum.Admin)

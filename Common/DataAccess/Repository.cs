@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace GroceryCheckOutSystem.DataAccess
 {
+    /// <summary>
+    /// Wrapper class for all repository to perform xml related operations
+    /// </summary>
     public class Repository
     {
         public string FilePath { get; set; }

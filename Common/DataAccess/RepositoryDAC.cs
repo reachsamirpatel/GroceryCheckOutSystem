@@ -9,6 +9,9 @@ using Utility;
 
 namespace GroceryCheckOutSystem.DataAccess
 {
+    /// <summary>
+    /// Base class to read and write to xml files.
+    /// </summary>
     public class RepositoryDAC : IRepositoryBP
     {
         public string FilePath;
@@ -21,20 +24,9 @@ namespace GroceryCheckOutSystem.DataAccess
         {
             _log = LogManager.GetLogger(this);
         }
-        public void UpSert<T>(T t) where T : class
-        {
-            try
-            {
-                File.WriteAllText(FilePath, ParseHelper.ToXML(t));
-            }
-            catch (Exception exp)
-            {
-                _log.Error(exp.Message);
-                _log.Error(exp.StackTrace);
-                throw;
-            }
-        }
-
+        /// <summary>
+        /// Method to insert value to xml
+        /// </summary>
         public List<T> GetAll<T>() where T : class
         {
             try
@@ -46,6 +38,22 @@ namespace GroceryCheckOutSystem.DataAccess
                 _log.Error(exp.Message);
                 _log.Error(exp.StackTrace);
                 return new List<T>();
+            }
+        }
+        /// <summary>
+        /// Method to get list from xml
+        /// </summary>
+        public void UpSert<T>(T t) where T : class
+        {
+            try
+            {
+                File.WriteAllText(FilePath, ParseHelper.ToXML(t));
+            }
+            catch (Exception exp)
+            {
+                _log.Error(exp.Message);
+                _log.Error(exp.StackTrace);
+                throw;
             }
         }
     }

@@ -9,6 +9,9 @@ using Logging;
 
 namespace BusinessProcess
 {
+    /// <summary>
+    /// Class to generate and display receipt
+    /// </summary>
     public class ReceiptBP
     {
         private ILogger _log;
@@ -21,7 +24,12 @@ namespace BusinessProcess
         {
             _log = LogManager.GetLogger(this);
         }
-
+        /// <summary>
+        /// Method to create receipt
+        /// </summary>
+        /// <param name="purchasedProductList"></param>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public string CreateReceipt(List<ProductPurchase> purchasedProductList, User user)
         {
             try
@@ -45,7 +53,11 @@ namespace BusinessProcess
                 throw;
             }
         }
-
+        /// <summary>
+        /// Adding header to the receipt
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         private StringBuilder AddHeader(User user)
         {
             string delimiter = "**************************************************************************" +
@@ -70,7 +82,11 @@ namespace BusinessProcess
             sb.AppendLine();
             return sb;
         }
-
+        /// <summary>
+        /// Adding summary and grouping of items in the receipts in the end
+        /// </summary>
+        /// <param name="purchasedProductList"></param>
+        /// <returns></returns>
         private StringBuilder PrintSummary(List<ProductPurchase> purchasedProductList)
         {
             IEnumerable<ProductPurchase> query =
@@ -102,6 +118,12 @@ namespace BusinessProcess
             return sb;
         }
 
+        /// <summary>
+        /// Adding footer
+        /// </summary>
+        /// <param name="purchasedProductList"></param>
+        /// <param name="sb"></param>
+        /// <param name="delimiter"></param>
         private void AddFooter(List<ProductPurchase> purchasedProductList, StringBuilder sb, string delimiter)
         {
             sb.Append(delimiter);

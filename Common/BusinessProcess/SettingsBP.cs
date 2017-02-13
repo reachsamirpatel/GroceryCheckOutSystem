@@ -14,6 +14,9 @@ using Utility;
 
 namespace BusinessProcess
 {
+    /// <summary>
+    /// Class to modifying or creating promotions
+    /// </summary>
     public class SettingsBP
     {
         private Repository _repository;
@@ -36,7 +39,9 @@ namespace BusinessProcess
             _productList = _repository.ProductRepository.GetAll();
             _log = LogManager.GetLogger(this);
         }
-
+        /// <summary>
+        /// Main wrapper to add promotion or end existing promotion
+        /// </summary>
         public void Start()
         {
             try
@@ -77,7 +82,9 @@ namespace BusinessProcess
                 throw;
             }
         }
-
+        /// <summary>
+        /// Method to end promotion
+        /// </summary>
         private void EndPromotion()
         {
             try
@@ -104,7 +111,11 @@ namespace BusinessProcess
                 throw;
             }
         }
-
+        /// <summary>
+        /// Method to select product and prompt message
+        /// </summary>
+        /// <param name="prompt"></param>
+        /// <returns></returns>
         private Product SelectProduct(string prompt = null)
         {
 
@@ -129,7 +140,9 @@ namespace BusinessProcess
                 Console.WriteLine("Selection {0} is not valid.", input);
             }
         }
-
+        /// <summary>
+        /// Method to start promotion
+        /// </summary>
         private void StartPromotion()
         {
             try
@@ -168,6 +181,12 @@ namespace BusinessProcess
                 throw;
             }
         }
+
+        /// <summary>
+        /// Method to get discount values with message on console
+        /// </summary>
+        /// <param name="prompt"></param>
+        /// <returns></returns>
         private double GetDouble(string prompt = null)
         {
             Console.Write(prompt);
@@ -184,7 +203,11 @@ namespace BusinessProcess
                 Console.WriteLine("{0} is not valid.", input);
             }
         }
-
+        /// <summary>
+        /// Method to get valid date in dd/MM/yyyy format
+        /// </summary>
+        /// <param name="prompt"></param>
+        /// <returns></returns>
         private DateTime GetDate(string prompt)
         {
             Console.WriteLine(prompt);
@@ -197,6 +220,10 @@ namespace BusinessProcess
             }
             return dt;
         }
+        /// <summary>
+        /// Method to add OnSale Promotion
+        /// </summary>
+        /// <param name="groceryItem"></param>
         private void AddOnSalePromotion(Product groceryItem)
         {
             double salePrice = GetSalePrice();
@@ -206,6 +233,10 @@ namespace BusinessProcess
             _promotionList.Add(promotion);
             _repository.PromotionRepository.UpSert(_promotionList);
         }
+        /// <summary>
+        /// Method to add Group Promotion
+        /// </summary>
+        /// <param name="groceryItem"></param>
 
         private void AddGroupPromotion(Product groceryItem)
         {
@@ -217,7 +248,10 @@ namespace BusinessProcess
             _promotionList.Add(promotion);
             _repository.PromotionRepository.UpSert(_promotionList);
         }
-
+        /// <summary>
+        /// Method to add Additional Product promotion
+        /// </summary>
+        /// <param name="groceryItem"></param>
         private void AddAdditionalProductPromotion(Product groceryItem)
         {
             int requiredItems = GetRequiredItems();
@@ -230,18 +264,28 @@ namespace BusinessProcess
             _promotionList.Add(promotion);
             _repository.PromotionRepository.UpSert(_promotionList);
         }
-
+        /// <summary>
+        /// Method to get No. of required items
+        /// </summary>
+        /// <returns></returns>
 
         private int GetRequiredItems()
         {
             return GetInt("Enter the number of items required for eligibility:");
         }
-
+        /// <summary>
+        /// Method to get sale price
+        /// </summary>
+        /// <returns></returns>
         private Double GetSalePrice()
         {
             return GetDouble("Enter the sale price (0.00):");
         }
-
+        /// <summary>
+        /// Method to check whether product has existing promotions or not
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         private bool GroceryItemHasExistingPromotions(string name)
         {
             if (_repository.PromotionRepository.GetAll().All(p => p.Name != name))
@@ -250,6 +294,12 @@ namespace BusinessProcess
             Console.WriteLine("There is already a promotion running for this item.");
             return true;
         }
+
+        /// <summary>
+        /// Method to validate integer value on console
+        /// </summary>
+        /// <param name="prompt"></param>
+        /// <returns></returns>
         private int GetInt(string prompt)
         {
             Console.Write(prompt);
@@ -266,6 +316,14 @@ namespace BusinessProcess
                 Console.WriteLine("{0} is not valid.", input);
             }
         }
+
+        /// <summary>
+        /// Method to select list of options 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="options"></param>
+        /// <param name="prompt"></param>
+        /// <returns></returns>
         private T SelectFrom<T>(IEnumerable<T> options, string prompt = null)
         {
             T[] items = options.ToArray();

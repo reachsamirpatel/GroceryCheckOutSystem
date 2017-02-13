@@ -15,6 +15,7 @@ using Logging;
 
 namespace BusinessProcess
 {
+    //Class to perform actions required for during checkout
     public class CheckOutBP
     {
 
@@ -40,6 +41,12 @@ namespace BusinessProcess
             _log = LogManager.GetLogger(this);
         }
 
+
+        /// <summary>
+        /// Core class to check for promotions for items in the basket and display receipt
+        /// </summary>
+        /// <param name="basketItems"></param>
+        /// <param name="effectivePromotions"></param>
         private void Checkout(List<ProductPurchase> basketItems, List<Promotion> effectivePromotions)
         {
             try
@@ -55,6 +62,10 @@ namespace BusinessProcess
             }
         }
 
+        /// <summary>
+        /// Method to display receipt
+        /// </summary>
+        /// <param name="purchase"></param>
         private void DisplayReciept(List<ProductPurchase> purchase)
         {
             try
@@ -76,7 +87,9 @@ namespace BusinessProcess
                 throw;
             }
         }
-
+        /// <summary>
+        /// Method to start checking out basket
+        /// </summary>
         private void StartCheckout()
         {
             try
@@ -116,7 +129,10 @@ namespace BusinessProcess
                 throw;
             }
         }
-
+        /// <summary>
+        /// Method to get items from the basket file
+        /// </summary>
+        /// <returns></returns>
         private List<string> GetCheckOutItems()
         {
             try

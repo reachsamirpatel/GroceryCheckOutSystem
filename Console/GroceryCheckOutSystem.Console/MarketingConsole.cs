@@ -2,6 +2,8 @@ using BusinessProcess;
 
 namespace GroceryCheckOutSystem.Console
 {
+    //Console app to perform actions Marketing Usertype.
+    //Only Settings changes are performed by the user.
     public class MarketingConsole
     {
         public static void Start(UserBP userBp)

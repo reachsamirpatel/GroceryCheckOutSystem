@@ -7,6 +7,9 @@ using GroceryCheckOut.Entity.Enums;
 
 namespace GroceryCheckOut.Entity
 {
+    /// <summary>
+    /// Login entity for login related functions
+    /// </summary>
     [DataContract]
     [Serializable, XmlRoot("Logins")]
     public class Login

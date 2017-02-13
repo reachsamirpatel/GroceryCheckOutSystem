@@ -7,6 +7,7 @@ namespace GroceryCheckOutSystem.Console
 {
     public static class ValidationConsole
     {
+        //Check whether file required by the application is actually present or not
         public static bool PerformHealthCheck()
         {
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
