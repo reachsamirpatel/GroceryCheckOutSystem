@@ -1,15 +1,11 @@
-﻿using NUnit.Framework;
-using GroceryCheckOutSystem.DataAccess;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DataAccess.Tests;
 using GroceryCheckOut.Entity;
 using GroceryCheckOut.Entity.Enums;
+using GroceryCheckOutSystem.DataAccess;
+using NUnit.Framework;
 
-namespace GroceryCheckOutSystem.DataAccess.Tests
+namespace DataAccess.Tests
 {
     [TestFixture()]
     public class PromotionRepositoryTests

@@ -234,7 +234,7 @@ namespace BusinessProcess
                 if (int.TryParse(input, out result))
                     return result;
 
-                Console.WriteLine($"{input} is not valid.");
+                Console.WriteLine("{0} is not valid.", input);
             }
         }
         private T SelectFrom<T>(IEnumerable<T> options, string prompt = null)
