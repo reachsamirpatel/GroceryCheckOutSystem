@@ -17,7 +17,8 @@ namespace GroceryCheckOutSystem.Console
     {
         static void Main(string[] args)
         {
-
+            if (!ValidationConsole.PerformHealthCheck())
+                return;
             UserBP userBp = new UserBP();
             userBp.Start();
             User currentUser = userBp.CurrentUser;
