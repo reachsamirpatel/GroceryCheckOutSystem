@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfPromotion xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Promotion>
+    <PromotionId>35880e84-49b2-41fc-8bf8-902eb783834e</PromotionId>
+    <Name>Banana</Name>
+    <PromotionType>OnSale</PromotionType>
+    <Discount>1</Discount>
+    <StartDate xsi:nil="true" />
+    <EndDate xsi:nil="true" />
+    <CreationDate>2017-02-13T00:32:24.7758905-05:00</CreationDate>
+    <CreatedBy xsi:nil="true" />
+    <NumberOfItemsRequired>1</NumberOfItemsRequired>
+  </Promotion>
+  <Promotion>
+    <PromotionId>9294e878-b896-4fb8-bcae-c8ba67acbc11</PromotionId>
+    <Name>Apple</Name>
+    <PromotionType>OnSale</PromotionType>
+    <Discount>1</Discount>
+    <StartDate xsi:nil="true" />
+    <EndDate xsi:nil="true" />
+    <CreationDate>2017-02-13T00:32:24.7763907-05:00</CreationDate>
+    <CreatedBy xsi:nil="true" />
+    <NumberOfItemsRequired>2</NumberOfItemsRequired>
+  </Promotion>
+  <Promotion>
+    <PromotionId>53df1c64-45e4-45ee-8bbb-f45c140646af</PromotionId>
+    <Name>Orange</Name>
+    <PromotionType>OnSale</PromotionType>
+    <Discount>1</Discount>
+    <StartDate xsi:nil="true" />
+    <EndDate xsi:nil="true" />
+    <CreationDate>2017-02-13T00:32:24.7763907-05:00</CreationDate>
+    <CreatedBy xsi:nil="true" />
+    <NumberOfItemsRequired>3</NumberOfItemsRequired>
+  </Promotion>
+  <Promotion>
+    <PromotionId>7b7fb8c8-602a-453c-ad6e-da77242753d7</PromotionId>
+    <Name>Mango</Name>
+    <PromotionType>OnSale</PromotionType>
+    <Discount>1</Discount>
+    <StartDate xsi:nil="true" />
+    <EndDate xsi:nil="true" />
+    <CreationDate>2017-02-13T00:32:24.7763907-05:00</CreationDate>
+    <CreatedBy xsi:nil="true" />
+    <NumberOfItemsRequired>4</NumberOfItemsRequired>
+  </Promotion>
+</ArrayOfPromotion>

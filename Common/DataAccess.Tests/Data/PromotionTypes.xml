@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfPromotionType xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <PromotionType>
+    <ShortName>1</ShortName>
+    <PromotionId>3459065e-77fa-471f-911d-0a37ce4cbe48</PromotionId>
+    <PromotionName>OnSale</PromotionName>
+  </PromotionType>
+  <PromotionType>
+    <ShortName>2</ShortName>
+    <PromotionId>d1c61835-70bc-485c-9f25-412ac7646f51</PromotionId>
+    <PromotionName>Group</PromotionName>
+  </PromotionType>
+  <PromotionType>
+    <ShortName>3</ShortName>
+    <PromotionId>29b4735e-c882-4f49-a0f4-fdd2d12c02e6</PromotionId>
+    <PromotionName>AdditionalProduct</PromotionName>
+  </PromotionType>
+</ArrayOfPromotionType>

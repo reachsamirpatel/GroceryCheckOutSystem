@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfLogin xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Login>
+    <UserId>6fef5486-fd19-4ead-8090-e93dfc437641</UserId>
+    <LoginName>clerk1</LoginName>
+    <Password>dGVzdDEy</Password>
+  </Login>
+  <Login>
+    <UserId>0326c248-106f-4990-82c3-b41dd6e1c553</UserId>
+    <LoginName>marketing1</LoginName>
+    <Password>dGVzdDEy</Password>
+  </Login>
+  <Login>
+    <UserId>ad6deb47-dbc8-4c79-a9d3-6573af2f56c4</UserId>
+    <LoginName>admin1</LoginName>
+    <Password>dGVzdDEy</Password>
+  </Login>
+</ArrayOfLogin>

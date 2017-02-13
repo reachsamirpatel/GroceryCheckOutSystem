@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging", "..\..\Common\Log
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessProcess.Tests", "..\..\Common\BusinessProcess.Tests\BusinessProcess.Tests.csproj", "{FA37F716-8198-4AE7-BD7E-CFC92E0D42B1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess.Tests", "..\..\Common\DataAccess.Tests\DataAccess.Tests.csproj", "{99E89CEA-DD04-4FA4-9EEC-5D3FB1F1256C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{FA37F716-8198-4AE7-BD7E-CFC92E0D42B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA37F716-8198-4AE7-BD7E-CFC92E0D42B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA37F716-8198-4AE7-BD7E-CFC92E0D42B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99E89CEA-DD04-4FA4-9EEC-5D3FB1F1256C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99E89CEA-DD04-4FA4-9EEC-5D3FB1F1256C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99E89CEA-DD04-4FA4-9EEC-5D3FB1F1256C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99E89CEA-DD04-4FA4-9EEC-5D3FB1F1256C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
